@@ -6,7 +6,6 @@ import { Button } from "@workspace/ui/components/button";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 
 export default function Page() {
-  const users = useQuery(api.users.getMany);
   const addUser = useMutation(api.users.add);
 
   return (
@@ -16,10 +15,6 @@ export default function Page() {
 
         <OrganizationSwitcher hidePersonal />
         <Button onClick={() => addUser()}>Add</Button>
-
-        <div className="max-w-sm w-full mx-auto gap-y-4 flex flex-col bg-red-500">
-          {JSON.stringify(users, null, 2)}
-        </div>
       </div>
     </>
   );
