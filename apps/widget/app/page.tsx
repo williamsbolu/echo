@@ -1,21 +1,29 @@
 "use client";
 
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@workspace/backend/_generated/api";
+import { useVapi } from "@/modules/widget/hooks/use-vapi";
 import { Button } from "@workspace/ui/components/button";
 
 export default function Page() {
-  const users = useQuery(api.users.getMany);
-  const addUser = useMutation(api.users.add);
+  const {
+    isSpeaking,
+    isConnecting,
+    isConnected,
+    transcript,
+    startCall,
+    endCall,
+  } = useVapi();
 
   return (
-    <div className="flex bg-green-200 flex-col items-center justify-center min-h-svh">
-      <p>app/Widget</p>
-      <Button onClick={() => addUser()}>Add</Button>
+    <div className="flex bg-green-200 flex-col items-center justify-center min-h-svh max-w-md mx-auto w-full">
+      <Button onClick={() => startCall()}>Start Call</Button>
+      <Button onClick={() => endCall()} variant="destructive">
+        End Call
+      </Button>
 
-      <div className="max-w-sm w-full mx-auto gap-y-4 flex flex-col">
-        {JSON.stringify(users, null, 2)}
-      </div>
+      <p>IsConnected {isConnected}</p>
+      <p>IsConnecting {isConnecting}</p>
+      <p>IsSpeaking {isSpeaking}</p>
+      <p>{JSON.stringify(transcript, null, 2)}</p>
     </div>
   );
 }
